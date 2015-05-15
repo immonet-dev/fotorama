@@ -17,3 +17,5 @@ src/templates/compiled.js
 _SpecRunner.html
 history.json
 .*
+/src/nbproject/private/
+/nbproject/private/
