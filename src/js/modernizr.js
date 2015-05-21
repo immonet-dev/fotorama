@@ -2,267 +2,250 @@
  * Build: http://modernizr.com/download/#-csstransforms3d-prefixed-teststyles-testprop-testallprops-prefixes-domprefixes
  */
 
-var Modernizr = (function (window, document, undefined) {
+/*
+ * Customized by Immonet to prevent collisions with other
+ * modernizr-usages within a page. Renamed the "Modernizr"
+ * Object to "FRModenrizr", so they won't collide.
+ */
+var FRModernizr = (function (window, document, undefined) {
+
+	var version = '2.6.2',
+			FRModernizr = {},
+			docElement = document.documentElement,
+			mod = 'modernizr',
+			modElem = document.createElement(mod),
+			mStyle = modElem.style,
+			inputElem,
+			toString = {}.toString,
+			prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
+			omPrefixes = 'Webkit Moz O ms',
+			cssomPrefixes = omPrefixes.split(' '),
+			domPrefixes = omPrefixes.toLowerCase().split(' '),
+			tests = {},
+			inputs = {},
+			attrs = {},
+			classes = [],
+			slice = classes.slice,
+			featureName,
+			injectElementWithStyles = function (rule, callback, nodes, testnames) {
+
+				var style, ret, node, docOverflow,
+						div = document.createElement('div'),
+						body = document.body,
+						fakeBody = body || document.createElement('body');
+
+				if (parseInt(nodes, 10)) {
+					while (nodes--) {
+						node = document.createElement('div');
+						node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
+						div.appendChild(node);
+					}
+				}
+
+				style = ['&#173;', '<style id="s', mod, '">', rule, '</style>'].join('');
+				div.id = mod;
+				(body ? div : fakeBody).innerHTML += style;
+				fakeBody.appendChild(div);
+				if (!body) {
+					fakeBody.style.background = '';
+					fakeBody.style.overflow = 'hidden';
+					docOverflow = docElement.style.overflow;
+					docElement.style.overflow = 'hidden';
+					docElement.appendChild(fakeBody);
+				}
+
+				ret = callback(div, rule);
+				if (!body) {
+					fakeBody.parentNode.removeChild(fakeBody);
+					docElement.style.overflow = docOverflow;
+				} else {
+					div.parentNode.removeChild(div);
+				}
+
+				return !!ret;
+
+			},
+			_hasOwnProperty = ({}).hasOwnProperty, hasOwnProp;
+
+	if (!is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined')) {
+		hasOwnProp = function (object, property) {
+			return _hasOwnProperty.call(object, property);
+		};
+	}
+	else {
+		hasOwnProp = function (object, property) {
+			return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
+		};
+	}
+
+
+	if (!Function.prototype.bind) {
+		Function.prototype.bind = function bind(that) {
+
+			var target = this;
+
+			if (typeof target !== "function") {
+				throw new TypeError();
+			}
+
+			var args = slice.call(arguments, 1),
+					bound = function () {
+
+						if (this instanceof bound) {
+
+							var F = function () {
+							};
+							F.prototype = target.prototype;
+							var self = new F();
+
+							var result = target.apply(
+									self,
+									args.concat(slice.call(arguments))
+									);
+							if (Object(result) === result) {
+								return result;
+							}
+							return self;
+
+						} else {
+
+							return target.apply(
+									that,
+									args.concat(slice.call(arguments))
+									);
+
+						}
+
+					};
+
+			return bound;
+		};
+	}
+
+	function setCss(str) {
+		mStyle.cssText = str;
+	}
 
-  var version = '2.6.2',
+	function setCssAll(str1, str2) {
+		return setCss(prefixes.join(str1 + ';') + (str2 || ''));
+	}
 
-      Modernizr = {},
+	function is(obj, type) {
+		return typeof obj === type;
+	}
 
-      docElement = document.documentElement,
+	function contains(str, substr) {
+		return !!~('' + str).indexOf(substr);
+	}
 
-      mod = 'modernizr',
-      modElem = document.createElement(mod),
-      mStyle = modElem.style,
+	function testProps(props, prefixed) {
+		for (var i in props) {
+			var prop = props[i];
+			if (!contains(prop, "-") && mStyle[prop] !== undefined) {
+				return prefixed === 'pfx' ? prop : true;
+			}
+		}
+		return false;
+	}
 
-      inputElem,
+	function testDOMProps(props, obj, elem) {
+		for (var i in props) {
+			var item = obj[props[i]];
+			if (item !== undefined) {
 
-      toString = {}.toString,
+				if (elem === false)
+					return props[i];
 
-      prefixes = ' -webkit- -moz- -o- -ms- '.split(' '),
+				if (is(item, 'function')) {
+					return item.bind(elem || obj);
+				}
 
-      omPrefixes = 'Webkit Moz O ms',
+				return item;
+			}
+		}
+		return false;
+	}
 
-      cssomPrefixes = omPrefixes.split(' '),
+	function testPropsAll(prop, prefixed, elem) {
 
-      domPrefixes = omPrefixes.toLowerCase().split(' '),
+		var ucProp = prop.charAt(0).toUpperCase() + prop.slice(1),
+				props = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
 
-      tests = {},
-      inputs = {},
-      attrs = {},
+		if (is(prefixed, "string") || is(prefixed, "undefined")) {
+			return testProps(props, prefixed);
 
-      classes = [],
+		} else {
+			props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
+			return testDOMProps(props, prefixed, elem);
+		}
+	}
 
-      slice = classes.slice,
+	tests['csstransforms3d'] = function () {
+		var ret = !!testPropsAll('perspective');
+		return ret;
+	};
 
-      featureName,
+	for (var feature in tests) {
+		if (hasOwnProp(tests, feature)) {
+			featureName = feature.toLowerCase();
+			FRModernizr[featureName] = tests[feature]();
 
-      injectElementWithStyles = function (rule, callback, nodes, testnames) {
+			classes.push((FRModernizr[featureName] ? '' : 'no-') + featureName);
+		}
+	}
 
-        var style, ret, node, docOverflow,
-            div = document.createElement('div'),
-            body = document.body,
-            fakeBody = body || document.createElement('body');
+	FRModernizr.addTest = function (feature, test) {
+		if (typeof feature === 'object') {
+			for (var key in feature) {
+				if (hasOwnProp(feature, key)) {
+					FRModernizr.addTest(key, feature[ key ]);
+				}
+			}
+		} else {
 
-        if (parseInt(nodes, 10)) {
-          while (nodes--) {
-            node = document.createElement('div');
-            node.id = testnames ? testnames[nodes] : mod + (nodes + 1);
-            div.appendChild(node);
-          }
-        }
+			feature = feature.toLowerCase();
 
-        style = ['&#173;', '<style id="s', mod, '">', rule, '</style>'].join('');
-        div.id = mod;
-        (body ? div : fakeBody).innerHTML += style;
-        fakeBody.appendChild(div);
-        if (!body) {
-          fakeBody.style.background = '';
-          fakeBody.style.overflow = 'hidden';
-          docOverflow = docElement.style.overflow;
-          docElement.style.overflow = 'hidden';
-          docElement.appendChild(fakeBody);
-        }
+			if (FRModernizr[feature] !== undefined) {
+				return FRModernizr;
+			}
 
-        ret = callback(div, rule);
-        if (!body) {
-          fakeBody.parentNode.removeChild(fakeBody);
-          docElement.style.overflow = docOverflow;
-        } else {
-          div.parentNode.removeChild(div);
-        }
+			test = typeof test === 'function' ? test() : test;
 
-        return !!ret;
+			if (typeof enableClasses !== "undefined" && enableClasses) {
+				docElement.className += ' ' + (test ? '' : 'no-') + feature;
+			}
+			FRModernizr[feature] = test;
 
-      },
-      _hasOwnProperty = ({}).hasOwnProperty, hasOwnProp;
+		}
 
-  if (!is(_hasOwnProperty, 'undefined') && !is(_hasOwnProperty.call, 'undefined')) {
-    hasOwnProp = function (object, property) {
-      return _hasOwnProperty.call(object, property);
-    };
-  }
-  else {
-    hasOwnProp = function (object, property) {
-      return ((property in object) && is(object.constructor.prototype[property], 'undefined'));
-    };
-  }
+		return FRModernizr;
+	};
 
 
-  if (!Function.prototype.bind) {
-    Function.prototype.bind = function bind (that) {
+	setCss('');
+	modElem = inputElem = null;
 
-      var target = this;
 
-      if (typeof target != "function") {
-        throw new TypeError();
-      }
+	FRModernizr._version = version;
 
-      var args = slice.call(arguments, 1),
-          bound = function () {
+	FRModernizr._prefixes = prefixes;
+	FRModernizr._domPrefixes = domPrefixes;
+	FRModernizr._cssomPrefixes = cssomPrefixes;
 
-            if (this instanceof bound) {
+	FRModernizr.testProp = function (prop) {
+		return testProps([prop]);
+	};
 
-              var F = function () {
-              };
-              F.prototype = target.prototype;
-              var self = new F();
-
-              var result = target.apply(
-                  self,
-                  args.concat(slice.call(arguments))
-              );
-              if (Object(result) === result) {
-                return result;
-              }
-              return self;
-
-            } else {
-
-              return target.apply(
-                  that,
-                  args.concat(slice.call(arguments))
-              );
-
-            }
-
-          };
-
-      return bound;
-    };
-  }
-
-  function setCss (str) {
-    mStyle.cssText = str;
-  }
-
-  function setCssAll (str1, str2) {
-    return setCss(prefixes.join(str1 + ';') + ( str2 || '' ));
-  }
-
-  function is (obj, type) {
-    return typeof obj === type;
-  }
-
-  function contains (str, substr) {
-    return !!~('' + str).indexOf(substr);
-  }
+	FRModernizr.testAllProps = testPropsAll;
 
-  function testProps (props, prefixed) {
-    for (var i in props) {
-      var prop = props[i];
-      if (!contains(prop, "-") && mStyle[prop] !== undefined) {
-        return prefixed == 'pfx' ? prop : true;
-      }
-    }
-    return false;
-  }
+	FRModernizr.testStyles = injectElementWithStyles;
+	FRModernizr.prefixed = function (prop, obj, elem) {
+		if (!obj) {
+			return testPropsAll(prop, 'pfx');
+		} else {
+			return testPropsAll(prop, obj, elem);
+		}
+	};
 
-  function testDOMProps (props, obj, elem) {
-    for (var i in props) {
-      var item = obj[props[i]];
-      if (item !== undefined) {
-
-        if (elem === false) return props[i];
-
-        if (is(item, 'function')) {
-          return item.bind(elem || obj);
-        }
-
-        return item;
-      }
-    }
-    return false;
-  }
-
-  function testPropsAll (prop, prefixed, elem) {
-
-    var ucProp = prop.charAt(0).toUpperCase() + prop.slice(1),
-        props = (prop + ' ' + cssomPrefixes.join(ucProp + ' ') + ucProp).split(' ');
-
-    if (is(prefixed, "string") || is(prefixed, "undefined")) {
-      return testProps(props, prefixed);
-
-    } else {
-      props = (prop + ' ' + (domPrefixes).join(ucProp + ' ') + ucProp).split(' ');
-      return testDOMProps(props, prefixed, elem);
-    }
-  }
-
-  tests['csstransforms3d'] = function () {
-
-    var ret = !!testPropsAll('perspective');
-
-// Chrome fails that test, ignore
-//		if (ret && 'webkitPerspective' in docElement.style) {
-//
-//			injectElementWithStyles('@media (transform-3d),(-webkit-transform-3d){#modernizr{left:9px;position:absolute;height:3px;}}', function (node, rule) {
-//				ret = node.offsetLeft === 9 && node.offsetHeight === 3;
-//			});
-//		}
-    return ret;
-  };
-
-  for (var feature in tests) {
-    if (hasOwnProp(tests, feature)) {
-      featureName = feature.toLowerCase();
-      Modernizr[featureName] = tests[feature]();
-
-      classes.push((Modernizr[featureName] ? '' : 'no-') + featureName);
-    }
-  }
-
-  Modernizr.addTest = function (feature, test) {
-    if (typeof feature == 'object') {
-      for (var key in feature) {
-        if (hasOwnProp(feature, key)) {
-          Modernizr.addTest(key, feature[ key ]);
-        }
-      }
-    } else {
-
-      feature = feature.toLowerCase();
-
-      if (Modernizr[feature] !== undefined) {
-        return Modernizr;
-      }
-
-      test = typeof test == 'function' ? test() : test;
-
-      if (typeof enableClasses !== "undefined" && enableClasses) {
-        docElement.className += ' ' + (test ? '' : 'no-') + feature;
-      }
-      Modernizr[feature] = test;
-
-    }
-
-    return Modernizr;
-  };
-
-
-  setCss('');
-  modElem = inputElem = null;
-
-
-  Modernizr._version = version;
-
-  Modernizr._prefixes = prefixes;
-  Modernizr._domPrefixes = domPrefixes;
-  Modernizr._cssomPrefixes = cssomPrefixes;
-
-  Modernizr.testProp = function (prop) {
-    return testProps([prop]);
-  };
-
-  Modernizr.testAllProps = testPropsAll;
-
-  Modernizr.testStyles = injectElementWithStyles;
-  Modernizr.prefixed = function (prop, obj, elem) {
-    if (!obj) {
-      return testPropsAll(prop, 'pfx');
-    } else {
-      return testPropsAll(prop, obj, elem);
-    }
-  };
-
-  return Modernizr;
+	return FRModernizr;
 })(window, document);
