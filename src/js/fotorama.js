@@ -1568,7 +1568,6 @@ jQuery.Fotorama = function ($fotorama, opts) {
 			changeToRtl.f = o_rtl;
 			activeIndex = size - 1 - activeIndex;
 			that.reverse();
-
 			return true;
 		}
 	}
