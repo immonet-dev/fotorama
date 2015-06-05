@@ -1,0 +1,173 @@
+/**
+ *	CSS for Fotorama-KenBurns-like transition
+ */
+.fotorama.kenburnsCSS3 .fotorama__stage__frame.kbleftup img {
+	-webkit-animation: kburnsA 25s linear;
+	-moz-animation: kburnsA 25s linear;
+	-ms-animation: kburnsA 25s linear;
+	animation: kburnsA 25s linear;
+}
+
+.fotorama.kenburnsCSS3 .fotorama__stage__frame.kbrightup img {
+	-webkit-animation: kburnsB 25s linear;
+	-moz-animation: kburnsB 25s linear;
+	-ms-animation: kburnsB 25s linear;
+	animation: kburnsB 25s linear;
+}
+
+.fotorama.kenburnsCSS3 .fotorama__stage__frame.kbrightdown img {
+	-webkit-animation: kburnsC 25s linear;
+	-moz-animation: kburnsC 25s linear;
+	-ms-animation: kburnsC 25s linear;
+	animation: kburnsC 25s linear;
+}
+
+.fotorama.kenburnsCSS3 .fotorama__stage__frame.kbleftdown img {
+	-webkit-animation: kburnsD 25s linear;
+	-moz-animation: kburnsD 25s linear;
+	-ms-animation: kburnsD 25s linear;
+	animation: kburnsD 25s linear;
+}
+
+/**
+ * no KenBurns-Transitions when in fullscreen-mode
+ */
+.fullscreen .fotorama.kenburnsCSS3 .fotorama__stage__frame.kbleftup img,
+.fullscreen .fotorama.kenburnsCSS3 .fotorama__stage__frame.kbrightup img,
+.fullscreen .fotorama.kenburnsCSS3 .fotorama__stage__frame.kbrightdown img,
+.fullscreen .fotorama.kenburnsCSS3 .fotorama__stage__frame.kbleftdown img {
+	-webkit-animation: none;
+	-moz-animation: none;
+	-ms-animation: none;
+	animation: none;
+}
+
+.fullscreen .fotorama.kenburnsCSS3 .fotorama__stage__frame img {
+	width: auto;
+	height: auto;
+	top: auto;
+	left: auto;
+}
+
+/* Animation A - to left top */
+@-webkit-keyframes kburnsA {
+	0% {opacity:0; -webkit-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -webkit-transform:translate(-15%,-15%) scale(1.35);}
+	30% {opacity:1; -webkit-transform:translate(-30%,-30%) scale(1.6);}
+	40% {opacity:0; -webkit-transform:translate(-45%,-45%) scale(1.85);}
+	100% {opacity:0;}
+}
+
+@-moz-keyframes kburnsA {
+	0% {opacity:0; -moz-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -moz-transform:translate(-15%,-15%) scale(1.35);}
+	30% {opacity:1; -moz-transform:translate(-30%,-30%) scale(1.6);}
+	40% {opacity:0; -moz-transform:translate(-45%,-45%) scale(1.85);}
+	100% {opacity:0;}
+}
+@-ms-keyframes kburnsA {
+	0% {opacity:0; -ms-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -ms-transform:translate(-15%,-15%) scale(1.35);}
+	30% {opacity:1; -ms-transform:translate(-30%,-30%) scale(1.6);}
+	40% {opacity:0; -ms-transform:translate(-45%,-45%) scale(1.85);}
+	100% {opacity:0;}
+}
+
+@keyframes kburnsA {
+	0% {opacity:0; transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; transform:translate(-15%,-15%) scale(1.35);}
+	30% {opacity:1; transform:translate(-30%,-30%) scale(1.6);}
+	40% {opacity:0; transform:translate(-45%,-45%) scale(1.85);}
+	100% {opacity:0;}
+}
+
+/* Animation B - to right top */
+@-webkit-keyframes kburnsB {
+	0% {opacity:0; -webkit-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -webkit-transform:translate(15%,-15%) scale(1.35);}
+	30% {opacity:1; -webkit-transform:translate(30%,-30%) scale(1.6);}
+	40% {opacity:0; -webkit-transform:translate(45%,-45%) scale(1.85);}
+	100% {opacity:0;}
+}
+
+@-moz-keyframes kburnsB {
+	0% {opacity:0; -moz-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -moz-transform:translate(15%,-15%) scale(1.35);}
+	30% {opacity:1; -moz-transform:translate(30%,-30%) scale(1.6);}
+	40% {opacity:0; -moz-transform:translate(45%,-45%) scale(1.85);}
+	100% {opacity:0;}
+}
+@-ms-keyframes kburnsB {
+	0% {opacity:0; -ms-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -ms-transform:translate(15%,-15%) scale(1.35);}
+	30% {opacity:1; -ms-transform:translate(30%,-30%) scale(1.6);}
+	40% {opacity:0; -ms-transform:translate(45%,-45%) scale(1.85);}
+	100% {opacity:0;}
+}
+@keyframes kburnsB {
+	0% {opacity:0; transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; transform:translate(15%,-15%) scale(1.35);}
+	30% {opacity:1; transform:translate(30%,-30%) scale(1.6);}
+	40% {opacity:0; transform:translate(45%,-45%) scale(1.85);}
+	100% {opacity:0;}
+}
+
+/* Animation C - to right bottom */
+@-webkit-keyframes kburnsC {
+	0% {opacity:0; -webkit-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -webkit-transform:translate(15%,15%) scale(1.35);}
+	30% {opacity:1; -webkit-transform:translate(30%,30%) scale(1.6);}
+	40% {opacity:0; -webkit-transform:translate(45%,45%) scale(1.85);}
+	100% {opacity:0;}
+}
+@-moz-keyframes kburnsC {
+	0% {opacity:0; -moz-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -moz-transform:translate(15%,15%) scale(1.35);}
+	30% {opacity:1; -moz-transform:translate(30%,30%) scale(1.6);}
+	40% {opacity:0; -moz-transform:translate(45%,45%) scale(1.85);}
+	100% {opacity:0;}
+}
+@-ms-keyframes kburnsC {
+	0% {opacity:0; -ms-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -ms-transform:translate(15%,15%) scale(1.35);}
+	30% {opacity:1; -ms-transform:translate(30%,30%) scale(1.6);}
+	40% {opacity:0; -ms-transform:translate(45%,45%) scale(1.85);}
+	100% {opacity:0;}
+}
+@keyframes kburnsC {
+	0% {opacity:0; transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; transform:translate(15%,15%) scale(1.35);}
+	30% {opacity:1; transform:translate(30%,30%) scale(1.6);}
+	40% {opacity:0; transform:translate(45%,45%) scale(1.85);}
+	100% {opacity:0;}
+}
+
+/* Animation D - to left bottom */
+@-webkit-keyframes kburnsD {
+	0% {opacity:0; -webkit-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -webkit-transform:translate(-15%,15%) scale(1.35);}
+	30% {opacity:1; -webkit-transform:translate(-30%,30%) scale(1.6);}
+	40% {opacity:0; -webkit-transform:translate(-40%,40%) scale(1.9);}
+	100% {opacity:0;}
+}
+@-moz-keyframes kburnsD {
+	0% {opacity:0; -moz-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -moz-transform:translate(-15%,15%) scale(1.35);}
+	30% {opacity:1; -moz-transform:translate(-30%,30%) scale(1.6);}
+	40% {opacity:0; -moz-transform:translate(-40%,40%) scale(1.9);}
+	100% {opacity:0;}
+}
+@-ms-keyframes kburnsD {
+	0% {opacity:0; -ms-transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; -ms-transform:translate(-15%,15%) scale(1.35);}
+	30% {opacity:1; -ms-transform:translate(-30%,30%) scale(1.6);}
+	40% {opacity:0; -ms-transform:translate(-40%,40%) scale(1.9);}
+	100% {opacity:0;}
+}
+@keyframes kburnsD {
+	0% {opacity:0; transform:translate(0,0) scale(1.15);}
+	15% {opacity:1; transform:translate(-15%,15%) scale(1.35);}
+	30% {opacity:1; transform:translate(-30%,30%) scale(1.6);}
+	40% {opacity:0; transform:translate(-40%,40%) scale(1.9);}
+	100% {opacity:0;}
+}

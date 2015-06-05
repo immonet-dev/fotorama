@@ -13,6 +13,7 @@ var $WINDOW = $(window),
 		WHEEL = "onwheel" in document.createElement("div") ? "wheel" : document.onmousewheel !== undefined ? "mousewheel" : "DOMMouseScroll",
 		TOUCH_TIMEOUT = 250,
 		TRANSITION_DURATION = 300,
+		KBTRANSITION_DURATION = 1200,
 		SCROLL_LOCK_TIMEOUT = 1400,
 		AUTOPLAY_INTERVAL = 5000,
 		MARGIN = 2,
@@ -35,11 +36,9 @@ var $WINDOW = $(window),
 			minheight: null,
 			maxheight: null,
 			ratio: null, // '16/9' || 500/333 || 1.5
-
 			margin: MARGIN,
 			glimpse: 0,
 			fit: 'contain', // 'cover' || 'scaledown' || 'none'
-
 			position: FIFTYFIFTY,
 			thumbposition: FIFTYFIFTY,
 			// navigation, thumbs
@@ -52,12 +51,12 @@ var $WINDOW = $(window),
 			thumbmargin: MARGIN,
 			thumbborderwidth: MARGIN,
 			thumbfit: 'cover', // 'contain' || 'scaledown' || 'none'
-
 			allowfullscreen: false, // true || 'native'
-
-			transition: 'slide', // 'crossfade' || 'dissolve'
+			transition: 'slide', // 'crossfade' || 'dissolve' || 'kenburns'
+			kenburnsclasses: ['kbleftup', 'kbrightup', 'kbrightdown', 'kbleftdown'],
 			clicktransition: null,
 			transitionduration: TRANSITION_DURATION,
+			kenburnstransitionduration: KBTRANSITION_DURATION,
 			captions: true,
 			hash: false,
 			startindex: 0,
@@ -73,7 +72,6 @@ var $WINDOW = $(window),
 			controlsonstart: true,
 			shuffle: false,
 			direction: 'ltr', // 'rtl'
-
 			shadows: true,
 			spinner: null
 		},

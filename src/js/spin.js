@@ -311,7 +311,6 @@ spinnerOverride = {
 				el.childNodes[i].style.opacity = val;
 			}
 		}
-
 	});
 
 
