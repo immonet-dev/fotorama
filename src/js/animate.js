@@ -53,8 +53,12 @@ function fade($el1, $el2, $frames, options, fadeStack, chain) {
 
 	$frames.removeClass(fadeRearClass + ' ' + fadeFrontClass);
 	$el1.stop().addClass(fadeRearClass);
-	// randomize the css.class for kenburns-transitions, if the kenbunrs-transition is set
+
+	// randomize the css.class for kenburns-transitions, if the kenburns-transition is set
 	if (kenburnsFLAG) {
+		for (var index in options.kenburnsclasses) {
+			$el1.removeClass(options.kenburnsclasses[index]);
+		}
 		$el1.addClass(options.kenburnsclasses[Math.floor(Math.random() * options.kenburnsclasses.length)]);
 	}
 
